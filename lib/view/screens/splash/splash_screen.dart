@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
-
 import '../home/home_screen.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Chờ 2 giây rồi chuyển trang
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
+      // Kiểm tra xem widget còn tồn tại không trước khi chuyển trang
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+      }
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBodyPage(),
     );
@@ -36,7 +49,7 @@ class SplashScreen extends StatelessWidget {
           children: [
             _buildIconSplash(),
             _buildTextSplash(),
-            SizedBox(height: 26,),
+            SizedBox(height: 26),
             _buildTitleSplash(),
           ],
         ),
@@ -66,7 +79,6 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-
   Widget _buildTextSplash() {
     return Container(
       child: const Text(
@@ -75,18 +87,19 @@ class SplashScreen extends StatelessWidget {
           fontSize: 34,
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontFamily: 'Poppins'
+          fontFamily: 'Poppins',
         ),
       ),
     );
   }
+
   Widget _buildTitleSplash() {
-    return  Text(
+    return Text(
       'Dont worry about\n the weather we all here',
       style: TextStyle(
         fontSize: 16,
         color: Colors.white.withOpacity(0.40),
-          fontFamily: 'Poppins'
+        fontFamily: 'Poppins',
       ),
       textAlign: TextAlign.center,
     );
